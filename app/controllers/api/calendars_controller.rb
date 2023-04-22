@@ -1,12 +1,12 @@
 class Api::CalendarsController < ApplicationController
   protect_from_forgery with: :null_session
 
-  before_action :find_meeting, only: [:cancel]
+  before_action :find_meeting, only: [:cancel, :destroy]
 
   def index
     date = Date.parse(params[:date])
 
-    @meetings_map = Meeting.where("start_at > ? and start_at < ? and status = 0", date, date+1)
+    @meetings_map = Meeting.where("start_at > ? and start_at < ?", date, date+1)
       .order("start_at asc")
       .group_by(&:start_at)
     @partners = Partner.all
@@ -40,6 +40,12 @@ class Api::CalendarsController < ApplicationController
 
   def cancel
     @meeting.cancel!
+    ChatChannel.notify(@meeting.id)
+    head 204
+  end
+
+  def destroy
+    @meeting.destroy
     ChatChannel.notify(@meeting.id)
     head 204
   end

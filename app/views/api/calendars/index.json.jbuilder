@@ -6,6 +6,7 @@ json.calendars @meetings_map.each do |start_at, meetings|
     json.partner_id  meeting.partner_id
     json.candidate_id meeting.candidate_id
     json.candidate_name @candidates_map[meeting.candidate_id].name
+    json.status meeting.status
   end
 end
 

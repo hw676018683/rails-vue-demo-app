@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
     namespace :api, :defaults => { :format => 'json' } do
       resources :musicians, only: [:index, :show]
-      resources :calendars, only: [:index, :create] do
+      resources :calendars, only: [:index, :create, :destroy] do
         member do
           put :cancel
         end

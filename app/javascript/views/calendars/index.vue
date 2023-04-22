@@ -15,7 +15,7 @@
 				<tr v-for="calendar in store.calendars" :key="calendar.time">
 					<th scope="row">{{ calendar.time }}</th>
 					<td v-for="partner in store.partners" :key="partner.id" :set="meeting = calendar.meetings.find(meeting => meeting.partner_id == partner.id)">
-						{{ meeting ? meeting.candidate_name : "" }}
+						{{ meetingText(meeting) }}
 					</td>
 				</tr>
 			</tbody>
@@ -41,5 +41,15 @@ export default {
 			this.$api.call(this.store.index("2023-04-22"));
     	})
 	},
+
+	methods: {
+		meetingText(meeting) {
+			if (meeting) {
+				return meeting.status == 0 ? meeting.id + meeting.candidate_name : "已取消"
+			} else {
+				return "空闲"
+			}
+		}
+	}
 };
 </script>
