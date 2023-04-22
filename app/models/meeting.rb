@@ -6,6 +6,12 @@ class Meeting < ApplicationRecord
   validates :candidate_id, presence: true, uniqueness: { scope: [:start_at, :status] }, on: :create
   validates :partner_id, presence: true, uniqueness: { scope: [:start_at, :status] }, on: :create
 
+  def cancel!
+    update(status: 1)
+  end
+
+  private
+
   def validate_start_at
     t = Time.now.to_date
 

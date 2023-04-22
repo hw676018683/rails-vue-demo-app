@@ -6,7 +6,11 @@ Rails.application.routes.draw do
 
     namespace :api, :defaults => { :format => 'json' } do
       resources :musicians, only: [:index, :show]
-      resources :calendars, only: [:index, :create]
+      resources :calendars, only: [:index, :create] do
+        member do
+          put :cancel
+        end
+      end
 
       namespace :admin do
         resources :dashboard, only: :index
