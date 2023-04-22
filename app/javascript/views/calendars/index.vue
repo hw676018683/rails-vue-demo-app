@@ -36,6 +36,10 @@ export default {
 
 	created() {
 		this.$api.call(this.store.index("2023-04-22"));
+
+		this.$cable.on('chat', (event) => {
+			this.$api.call(this.store.index("2023-04-22"));
+    	})
 	},
 };
 </script>

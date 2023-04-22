@@ -9,4 +9,10 @@ class ChatChannel < ApplicationCable::Channel
       message: data['message'].upcase
     })
   end
+
+  def self.notify(data)
+    ActionCable.server.broadcast("ChatChannel", {
+      message: data
+    })
+  end
 end
