@@ -25,7 +25,7 @@ export default {
   },
 
   created() {
-    this.$api.call(this.store.index());    
+    this.$api.call(this.store.index());
   }
 }
 </script>
