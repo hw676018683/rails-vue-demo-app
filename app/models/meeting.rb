@@ -2,8 +2,8 @@ class Meeting < ApplicationRecord
   validates :start_at, presence: true
   validates :status, presence: true
 
-  validates :candidate_id, presence: true, uniqueness: { scope: [:start_at, :status] }, on: :create
-  validates :partner_id, presence: true, uniqueness: { scope: [:candidate_id, :start_at] }, on: :create
+  validates :candidate_id, presence: true, uniqueness: { scope: [:start_at, :status], message: "这个时间你已预约其他合伙人" }, on: :create
+  validates :partner_id, uniqueness: { scope: [:start_at], message: "已有安排" }, on: :create
 
   validate :validate_start_at, on: :create
   validate :ensure_only_same_one_meeting_one_day, on: :create

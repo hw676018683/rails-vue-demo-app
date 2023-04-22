@@ -2,6 +2,10 @@
 	<section class="container">
 		<h1>Live Calendar</h1>
 
+		<ul class="breadcrumb">
+      		<li><span>{{ date }}</span></li>
+    	</ul>
+
 		<table class="table">
 			<thead>
 				<tr>
@@ -31,14 +35,18 @@ export default {
 	setup() {
 		const store = CalendarStore();
 
-		return { store };
+		const params = new Proxy(new URLSearchParams(window.location.search), {
+			get: (searchParams, prop) => searchParams.get(prop),
+		});
+
+		return { store: store, date: params.date };
 	},
 
 	created() {
-		this.$api.call(this.store.index("2023-04-22"));
+		this.$api.call(this.store.index(this.date));
 
 		this.$cable.on('chat', (event) => {
-			this.$api.call(this.store.index("2023-04-22"));
+			this.$api.call(this.store.index(this.date));
     	})
 	},
 

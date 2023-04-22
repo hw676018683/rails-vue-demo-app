@@ -13,4 +13,5 @@ end
 json.partners @partners.each do |partner|
   json.id partner.id
   json.name partner.name
+  json.times @schedules_map[partner.id].try(:parsed_times)
 end

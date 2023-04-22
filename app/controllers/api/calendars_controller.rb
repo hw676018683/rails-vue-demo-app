@@ -10,6 +10,7 @@ class Api::CalendarsController < ApplicationController
       .order("start_at asc")
       .group_by(&:start_at)
     @partners = Partner.all
+    @schedules_map = Schedule.where("date = ?", date).index_by(&:partner_id)
     @candidates_map = Candidate.all.index_by(&:id)
   end
 
